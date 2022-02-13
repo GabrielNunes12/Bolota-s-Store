@@ -30,7 +30,12 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id){
         Optional<Category> obj = categoryRepository.findById(id);
-        Category category = obj.get();
-        return new CategoryDTO(category);
+        try {
+            Category category = obj.get();
+            return new CategoryDTO(category);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
