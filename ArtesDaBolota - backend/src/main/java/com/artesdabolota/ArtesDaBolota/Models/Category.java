@@ -1,12 +1,17 @@
 package com.artesdabolota.ArtesDaBolota.Models;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Table(name="tb_category")
+@Entity
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Category(String name, Long id) {
