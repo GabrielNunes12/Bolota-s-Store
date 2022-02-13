@@ -32,4 +32,11 @@ public class CategoryService {
         Category category = obj.orElseThrow(() -> new ExceptionHandler("Object not found"));
         return new CategoryDTO(category);
     }
+    @Transactional
+    public CategoryDTO insertCategory(CategoryDTO dto) {
+        Category category = new Category();
+        category.setName(dto.getName());
+        category = categoryRepository.save(category);
+        return new CategoryDTO(category);
+    }
 }
