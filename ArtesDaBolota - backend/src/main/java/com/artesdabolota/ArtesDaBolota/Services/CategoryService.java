@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,12 +29,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id){
         Optional<Category> obj = categoryRepository.findById(id);
-        try {
-            Category category = obj.get();
-            return new CategoryDTO(category);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        Category category = obj.orElseThrow(() -> new ExceptionHandler("Object not found"));
+        return new CategoryDTO(category);
     }
 }
