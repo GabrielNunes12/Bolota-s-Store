@@ -4,8 +4,18 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Category implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private Long id;
+
+    public Category(String name, Long id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public Category() {
+    }
 
     public String getName() {
         return name;
