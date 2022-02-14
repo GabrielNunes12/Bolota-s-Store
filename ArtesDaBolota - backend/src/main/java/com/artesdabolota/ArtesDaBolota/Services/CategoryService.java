@@ -1,5 +1,6 @@
 package com.artesdabolota.ArtesDaBolota.Services;
 
+import com.artesdabolota.ArtesDaBolota.Controllers.Exceptions.StandardErrors;
 import com.artesdabolota.ArtesDaBolota.DTOs.CategoryDTO;
 import com.artesdabolota.ArtesDaBolota.Models.Category;
 import com.artesdabolota.ArtesDaBolota.Repositories.CategoryRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,5 +40,21 @@ public class CategoryService {
         category.setName(dto.getName());
         category = categoryRepository.save(category);
         return new CategoryDTO(category);
+    }
+
+    @Transactional
+    public CategoryDTO updateCategory(Long id, CategoryDTO dto) {
+        //Buscar id no banco
+        //setar na model o novo nome do corpo da request
+        //salvar esse novo objeto
+        //retornar para front esse novo objeto
+        try {
+            Category category = categoryRepository.getOne(id);
+            category.setName(dto.getName());
+            category = categoryRepository.save(category);
+            return new CategoryDTO(category);
+        } catch (EntityNotFoundException exception) {
+            throw new ExceptionHandler("Id not found" + id);
+        }
     }
 }
