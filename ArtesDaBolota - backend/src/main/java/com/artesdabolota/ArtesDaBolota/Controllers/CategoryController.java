@@ -33,6 +33,6 @@ public class CategoryController {
         dto = categoryService.insertCategory(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.created(uri).body(dto);
     }
 }
