@@ -5,6 +5,8 @@ import com.artesdabolota.ArtesDaBolota.DTOs.CategoryDTO;
 import com.artesdabolota.ArtesDaBolota.Models.Category;
 import com.artesdabolota.ArtesDaBolota.Repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +57,20 @@ public class CategoryService {
             return new CategoryDTO(category);
         } catch (EntityNotFoundException exception) {
             throw new ExceptionHandler("Id not found" + id);
+        }
+    }
+
+    public void deleteCategory(Long id) {
+        //Buscar id no banco
+        //removendo pelo id passado
+        try {
+            categoryRepository.deleteById(id);
+        }//tratando exceção caso id não for encontrado
+        catch (EmptyResultDataAccessException exception) {
+            throw new ExceptionHandler("Id not found" + id);
+        }//tratando a exceção para violação de integridade do banco caso a categoria for deletada.
+        catch (DataIntegrityViolationException dataIntegrityViolationException) {
+            throw new ExceptionHandler("Category not found!" + dataIntegrityViolationException);
         }
     }
 }
