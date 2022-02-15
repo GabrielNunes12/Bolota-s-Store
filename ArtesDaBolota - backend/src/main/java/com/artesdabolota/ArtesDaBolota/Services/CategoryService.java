@@ -23,11 +23,16 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryDTO> findAll() {
+        //Recuperando a lista do banco
         List<Category> list = categoryRepository.findAll();
+
+        //converter lista de categoria para lista de DTO
         List<CategoryDTO> listDto = new ArrayList<>();
         for(Category category : list) {
             listDto.add(new CategoryDTO(category));
         }
+
+        //retornar a lista de DTO
         return listDto;
     }
     @Transactional(readOnly = true)
