@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +21,19 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Transactional(readOnly = true)
+    public List<CategoryDTO> findAll() {
+        //Recuperando a lista do banco
+        List<Category> list = categoryRepository.findAll();
+        //converter lista de categoria para lista de DTO
+        List<CategoryDTO> listDTO = new ArrayList<>();
+        //convertendo lista de categoria para categoriaDTO
+        for(Category category : list) {
+            listDTO.add(new CategoryDTO(category));
+        }
+        return listDTO;
+    }
 
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAllPaged(PageRequest pageRequest) {

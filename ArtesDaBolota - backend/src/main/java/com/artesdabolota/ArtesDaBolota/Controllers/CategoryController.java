@@ -21,7 +21,13 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDTO>> findAll(
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<CategoryDTO> list = categoryService.findAll();
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<CategoryDTO>> findAllPaged(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
