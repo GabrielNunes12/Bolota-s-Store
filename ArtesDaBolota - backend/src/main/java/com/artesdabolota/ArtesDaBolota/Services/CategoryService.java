@@ -1,18 +1,17 @@
 package com.artesdabolota.ArtesDaBolota.Services;
 
-import com.artesdabolota.ArtesDaBolota.Controllers.Exceptions.StandardErrors;
 import com.artesdabolota.ArtesDaBolota.DTOs.CategoryDTO;
 import com.artesdabolota.ArtesDaBolota.Models.Category;
 import com.artesdabolota.ArtesDaBolota.Repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,18 +21,11 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public List<CategoryDTO> findAll() {
-        //Recuperando a lista do banco
-        List<Category> list = categoryRepository.findAll();
-
+    public Page<CategoryDTO> findAllPaged(PageRequest pageRequest) {
+        //Recuperando a lista do banco já paginado
+        Page<Category> list = categoryRepository.findAll(pageRequest);
         //converter lista de categoria para lista de DTO
-        List<CategoryDTO> listDto = new ArrayList<>();
-        for(Category category : list) {
-            listDto.add(new CategoryDTO(category));
-        }
-
-        //retornar a lista de DTO
-        return listDto;
+        return list.map(x -> new CategoryDTO(x));
     }
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id){
@@ -41,6 +33,7 @@ public class CategoryService {
         Category category = obj.orElseThrow(() -> new ExceptionHandler("Object not found"));
         return new CategoryDTO(category);
     }
+
     @Transactional
     public CategoryDTO insertCategory(CategoryDTO dto) {
         Category category = new Category();
