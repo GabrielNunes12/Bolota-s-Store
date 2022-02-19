@@ -1,7 +1,10 @@
 package com.artesdabolota.ArtesDaBolota.Services;
 
+import com.artesdabolota.ArtesDaBolota.DTOs.CategoryDTO;
 import com.artesdabolota.ArtesDaBolota.DTOs.ProductDTO;
+import com.artesdabolota.ArtesDaBolota.Models.Category;
 import com.artesdabolota.ArtesDaBolota.Models.Product;
+import com.artesdabolota.ArtesDaBolota.Repositories.CategoryRepository;
 import com.artesdabolota.ArtesDaBolota.Repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
@@ -20,6 +22,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
@@ -38,14 +43,23 @@ public class ProductService {
     @Transactional
     public ProductDTO insertCategory(ProductDTO dto) {
         Product product = new Product();
+        copyDtoToEntity(dto, product);
+        product = productRepository.save(product);
+        return new ProductDTO(product);
+    }
+
+    private void copyDtoToEntity(ProductDTO dto, Product product) {
         product.setDate(dto.getDate());
         product.setDescription(dto.getDescription());
-        product.setId(dto.getId());
         product.setPrice(dto.getPrice());
         product.setImgUrl(dto.getImgUrl());
         product.setName(dto.getName());
-        product = productRepository.save(product);
-        return new ProductDTO(product);
+        product.getCategories().clear();
+
+        product.getCategories().forEach(categoryDTO -> {
+            Category category = categoryRepository.getOne(categoryDTO.getId());
+            product.getCategories().add(category);
+        });
     }
 
     @Transactional
@@ -56,10 +70,7 @@ public class ProductService {
         //retornar para front esse novo objeto
         try {
             Product product = productRepository.getOne(id);
-            product.setDescription(dto.getDescription());
-            product.setPrice(dto.getPrice());
-            product.setImgUrl(dto.getImgUrl());
-            product.setName(dto.getName());
+            copyDtoToEntity(dto, product);
             product = productRepository.save(product);
             return new ProductDTO(product);
         } catch (EntityNotFoundException exception) {

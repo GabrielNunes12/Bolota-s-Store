@@ -1,8 +1,6 @@
 package com.artesdabolota.ArtesDaBolota.Controllers;
 
-import com.artesdabolota.ArtesDaBolota.DTOs.CategoryDTO;
 import com.artesdabolota.ArtesDaBolota.DTOs.ProductDTO;
-import com.artesdabolota.ArtesDaBolota.Services.CategoryService;
 import com.artesdabolota.ArtesDaBolota.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
