@@ -1,6 +1,5 @@
 package com.artesdabolota.ArtesDaBolota.Services;
 
-import com.artesdabolota.ArtesDaBolota.DTOs.CategoryDTO;
 import com.artesdabolota.ArtesDaBolota.DTOs.ProductDTO;
 import com.artesdabolota.ArtesDaBolota.Models.Category;
 import com.artesdabolota.ArtesDaBolota.Models.Product;
