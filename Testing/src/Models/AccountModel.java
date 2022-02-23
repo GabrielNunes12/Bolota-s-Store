@@ -27,10 +27,17 @@ public class AccountModel {
     }
 
     public void deposit(double amount) {
+        String messageAmount = "Can not add a negative amount";
         if(amount > 0){
             amount -= amount * DEPOSIT_FEE_PERCENTAGE;
             balance += amount;
+        } else {
+            isAmountBelowThenBalance(messageAmount);
         }
+    }
+
+    public String isAmountBelowThenBalance(String message) {
+        return message;
     }
 
     public void withdraw (double amount) {
