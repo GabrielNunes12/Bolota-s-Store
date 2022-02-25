@@ -22,9 +22,23 @@ public class PersonService {
             if(person.equals(personDTO)) {
                 person.setLoggedIn(true);
                 personRepository.save(person);
-                return Status.SUCCESS;
             }
+            return Status.SUCCESS;
         }
         return Status.FAILURE;
+    }
+
+    @Transactional(readOnly = true)
+    public PersonDTO registerUser(PersonDTO personDTO) {
+        PersonModel personModel = new PersonModel();
+        copyDataToModel(personDTO, personModel);
+        personModel = personRepository.save(personModel);
+        return new PersonDTO(personModel);
+    }
+
+    private void copyDataToModel (PersonDTO personDTO, PersonModel personModel){
+        personModel.setName(personDTO.getName());
+        personModel.setEmail(personDTO.getEmail());
+        personModel.setPassword(personDTO.getPassword());
     }
 }

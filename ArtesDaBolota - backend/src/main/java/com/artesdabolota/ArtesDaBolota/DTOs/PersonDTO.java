@@ -10,6 +10,7 @@ public class PersonDTO implements Serializable {
     private Long id;
     private String email;
     private String password;
+    private String name;
 
     public PersonDTO() {
     }
@@ -20,6 +21,7 @@ public class PersonDTO implements Serializable {
         this.id = entity.getId();
         this.email = entity.getEmail();
         this.password = entity.getPassword();
+        this.name = entity.getName();
     }
 
     public Long getId() {
@@ -40,5 +42,13 @@ public class PersonDTO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
