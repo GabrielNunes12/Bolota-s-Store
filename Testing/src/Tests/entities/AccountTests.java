@@ -54,4 +54,16 @@ public class AccountTests {
         //Assertion
         Assertions.assertEquals(200, accountModel.getBalance());
     }
+
+    @Test
+    public void withdrawShouldReturnZeroOnBalance() {
+        //Arrange
+        AccountModel accountModel = AccountFactory.createAccountWithValues(200.00);
+
+        //ACT
+        accountModel.fullWithdraw();
+
+        //Assertion
+        Assertions.assertEquals(0, accountModel.getBalance());
+    }
 }

@@ -45,4 +45,10 @@ public class AccountModel {
         balance -= amount;
     }
 
+    public double fullWithdraw(){
+        double aux = balance;
+        balance = 0.00;
+        return aux;
+    }
+
 }

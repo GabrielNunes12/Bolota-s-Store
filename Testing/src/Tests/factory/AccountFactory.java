@@ -9,4 +9,5 @@ public class AccountFactory {
     public static AccountModel createAccountWithValues(double amount) {
         return new AccountModel(1L, amount);
     }
+
 }
