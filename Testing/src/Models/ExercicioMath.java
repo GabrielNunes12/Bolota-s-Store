@@ -14,9 +14,9 @@ public class ExercicioMath {
         System.out.println("Your result is: " + result);
     }
 
-    private static void testing() {
+   /* private static void testing() {
         // initialize variable
         int price, amount;
         System.out.println(price,amount);
-    }
+    }*/
 }
