@@ -7,6 +7,7 @@ export const HeaderContainer = styled.div`
     margin: 3rem 1rem; 
     text-decoration: none;
     color: #fff;
+    transition: 0.5s;
   }
   & a:hover {
     color: #000;

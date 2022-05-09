@@ -1,7 +1,12 @@
-export const Links = ({ link = '', message = '' }) => {
+import { Link } from "react-router-dom"
+
+export const Links = ({ link = '', message = '', isComponent }) => {
   return (
-    <a href={link} target="_blank" rel="noreferrer">
-      {message}
-    </a>
+    <>
+      {!isComponent ? (<a href={link} target="_blank" rel="noreferrer">
+        {message}
+      </a>) : (<Link to={link}> {message} </Link>)}
+
+    </>
   )
 }
