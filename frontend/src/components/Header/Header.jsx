@@ -1,7 +1,6 @@
 import {HeaderContainer} from './style';
 import HeaderImageComponent from '../HeaderImageComponent/HeaderImageComponent';
 import imageHeader from '../../images/ImageHeader/imageHeader.png';
-import { Products } from '../../Views/Product/index';
 
 import { API_WHATSAPP, API_FACEBOOK, API_TELEGRAM } from '../../controls';
 import { Links } from '../Links';
